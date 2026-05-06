@@ -65,15 +65,16 @@ function guardarCliente(){
     egresos: cmpEgresos
   }
     console.log(cliente)
+    clienteSeleccionado = buscarCliente(cmpCedula)
  
     if(clienteSeleccionado!=null){
-      if(clientes[clienteSeleccionado].cedula!=cliente.cedula){
-        alert("NO SE PERMITE MODIFICAR LA CEDULA")
-      }
-      clientes[clienteSeleccionado].nombre=cliente.nombre
-      clientes[clienteSeleccionado].apellido=cliente.apellido
-      clientes[clienteSeleccionado].ingresos=cliente.ingresos
-      clientes[clienteSeleccionado].egresos=cliente.egresos
+      // if(clientes[clienteSeleccionado].cedula!=cliente.cedula){
+      //   alert("NO SE PERMITE MODIFICAR LA CEDULA")
+      // }
+      clienteSeleccionado.nombre=cliente.nombre
+      clienteSeleccionado.apellido=cliente.apellido
+      clienteSeleccionado.ingresos=cliente.ingresos
+      clienteSeleccionado.egresos=cliente.egresos
     }else{
     clientes.push(cliente)// se guarda el objeto
     console.log(clientes)
@@ -115,11 +116,11 @@ function buscarCliente(cedula){
 function seleccionarCliente(cedula){
   clienteSeleccionado=buscarCliente(cedula)
   if(clienteSeleccionado!=null){
-    mostrarTextoEnCaja("cedula",clientes[clienteSeleccionado].cedula)
-    mostrarTextoEnCaja("nombre",clientes[clienteSeleccionado].nombre)
-    mostrarTextoEnCaja("apellido",clientes[clienteSeleccionado].apellido)
-    mostrarTextoEnCaja("ingresos",clientes[clienteSeleccionado].ingresos)
-    mostrarTextoEnCaja("egresos",clientes[clienteSeleccionado].egresos)
+    mostrarTextoEnCaja("cedula",clienteSeleccionado.cedula)
+    mostrarTextoEnCaja("nombre",clienteSeleccionado.nombre)
+    mostrarTextoEnCaja("apellido",clienteSeleccionado.apellido)
+    mostrarTextoEnCaja("ingresos",clienteSeleccionado.ingresos)
+    mostrarTextoEnCaja("egresos",clienteSeleccionado.egresos)
   }
 }
  
@@ -337,5 +338,44 @@ function solicitarCredito(){
   creditos.push(credito);
 
 }
+function pintarCreditos(creditos){
+  let tabla = recuperarElemento("tablaCreditos");
+  let contenidoTabla = "";
+  for (let i=0; i<creditos.length; i++){
+    let credito = creditos[i];
+    contenidoTabla += `<tr>
+          <td>${credito.cedula}</td>
+          <td>${credito.nombre}</td>
+          <td>${credito.apellido}</td>
+          <td>${credito.monto}</td>
+          <td>${credito.tasa}</td>
+          <td>${credito.plazo}</td>
+          <td>${credito.cuota}</td>
+          <td><button>Eliminar</button></td>
+        </tr>`
+  }
+  tabla.innerHTML=contenidoTabla;
+}
 
+function buscarCreditos(cedula){
+  let creditosCliente = [ ];
+  for (let i=0; i<creditos.length; i++){
+  let credito = creditos[i];
+  if(cedula == credito.cedula
+  ){
+    creditosCliente.push(creditos[i])
+  } 
+  }
+  return creditosCliente
+}
+
+function buscarCreditosCliente(){
+let campoCedula = recuperarTexto("buscarCedulaListado");
+let creditoRecuperado = buscarCreditos(campoCedula);
+if(creditoRecuperado != null){
+  pintarCreditos(creditoRecuperado)
+}
+
+
+}
 
