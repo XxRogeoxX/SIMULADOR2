@@ -325,5 +325,17 @@ function calcularCredito() {
  
   resultadoCredito.innerHTML = contenedor;
 }
+function solicitarCredito(){
+  credito={cedula:clienteSeleccionado.cedula,
+    nombre:clienteSeleccionado.nombre,
+    apellido:clienteSeleccionado.apellido,
+    monto:montoCalculado,
+    tasa:tasaInteres,
+    plazo:plazoCalculado,
+    cuota:cuotaCalculada
+  }
+  creditos.push(credito);
+
+}
 
 
