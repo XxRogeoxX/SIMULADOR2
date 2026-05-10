@@ -1,85 +1,92 @@
-/* simulador_completo.css */
+/* simulador_completo.css - Diseño Banking Pro */
 
 :root {
-  --primary-color: #1f3c88;
-  --secondary-color: #14275c;
-  --accent-color: #00bcd4;
-  --bg-color: #f0f2f5;
-  --text-dark: #333;
+  --primary: #0a2540; /* Azul medianoche bancario */
+  --accent: #00d4ff;  /* Cian moderno */
+  --success: #2ecc71;
+  --danger: #ff4757;
+  --bg: #f6f9fc;
   --white: #ffffff;
-  --success: #28a745;
-  --danger: #dc3545;
+  --text-main: #425466;
+  --text-title: #0a2540;
+  --border: #e6ebf1;
+  --shadow: 0 7px 14px 0 rgba(49, 49, 93, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.08);
 }
 
 body {
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background: var(--bg-color);
-  color: var(--text-dark);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
   margin: 0;
   padding: 0;
-  line-height: 1.6;
 }
 
-/* Header elegante */
+/* Header Estilo App Bancaria */
 header {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-  color: white;
-  padding: 2rem 1rem;
+  background: var(--primary);
+  color: var(--white);
+  padding: 2.5rem 1rem;
   text-align: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border-bottom: 4px solid var(--accent);
 }
 
 header h1 {
+  font-weight: 600;
   margin: 0;
-  font-weight: 300;
-  letter-spacing: 1px;
+  letter-spacing: -0.5px;
+  font-size: 1.8rem;
 }
 
-/* Navegación responsiva */
+/* Navegación tipo Tabs */
 nav {
   display: flex;
   justify-content: center;
   background: var(--white);
-  padding: 10px;
-  gap: 10px;
-  flex-wrap: wrap;
+  padding: 0;
+  gap: 0;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
 nav button {
-  padding: 12px 20px;
+  padding: 18px 25px;
   border: none;
   background: transparent;
-  color: var(--primary-color);
-  font-weight: 600;
+  color: var(--text-main);
+  font-weight: 500;
   cursor: pointer;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-  border: 1px solid var(--primary-color);
+  transition: all 0.2s ease;
+  border-bottom: 3px solid transparent;
+  font-size: 0.95rem;
 }
 
 nav button:hover {
-  background: var(--primary-color);
-  color: var(--white);
+  color: var(--accent);
+  background: #f8fbfd;
 }
 
-/* Secciones y contenedores */
+/* Estilo para simular botón activo (puedes añadir la clase en JS si quieres) */
+nav button:focus {
+  border-bottom: 3px solid var(--accent);
+  color: var(--primary);
+}
+
+/* Secciones Dinámicas */
 section {
   display: none;
-  padding: 30px;
-  max-width: 1000px;
-  margin: 20px auto;
+  padding: 40px;
+  max-width: 1100px;
+  margin: 30px auto;
   background: var(--white);
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  animation: fadeIn 0.4s ease;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  animation: slideUp 0.5s ease-out;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -88,131 +95,150 @@ section.activa {
 }
 
 h2 {
-  color: var(--primary-color);
-  border-bottom: 2px solid var(--bg-color);
-  padding-bottom: 10px;
-  margin-top: 0;
+  color: var(--text-title);
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Formularios e Inputs */
-.form-group {
-  margin-bottom: 15px;
+h2::before {
+  content: "";
+  width: 4px;
+  height: 24px;
+  background: var(--accent);
+  border-radius: 4px;
 }
 
-input, select {
-  padding: 12px;
-  margin: 8px 0;
-  width: 100%; /* Full width para móvil */
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+/* Inputs y Formularios Modernos */
+input {
+  padding: 14px 16px;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 400px;
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fafafa;
   font-size: 1rem;
-  transition: border-color 0.3s;
+  transition: all 0.3s;
 }
 
 input:focus {
   outline: none;
-  border-color: var(--accent-color);
-  box-shadow: 0 0 5px rgba(0,188,212,0.2);
+  border-color: var(--accent);
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.1);
 }
 
+label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--primary);
+  display: block;
+  margin-top: 15px;
+}
+
+/* Botones Corporativos */
 button {
-  padding: 12px 24px;
-  margin: 10px 5px 10px 0;
-  cursor: pointer;
-  border-radius: 6px;
+  padding: 12px 28px;
+  border-radius: 8px;
   border: none;
-  background-color: var(--primary-color);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: var(--primary);
   color: white;
-  font-weight: bold;
-  transition: transform 0.2s, background 0.3s;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 button:hover {
-  background-color: var(--secondary-color);
-  transform: translateY(-1px);
+  background: #163e66;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 14px rgba(0,0,0,0.1);
 }
 
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+button:active {
+  transform: translateY(0);
 }
 
-/* Tablas Responsivas */
-.table-container {
-  overflow-x: auto; /* Permite scroll horizontal en móviles */
-}
-
+/* Tabla Estilo Dashboard */
 table {
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background: var(--white);
-}
-
-th, td {
-  padding: 12px 15px;
-  text-align: left;
-  border-bottom: 1px solid #eee;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 30px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
 }
 
 th {
-  background-color: var(--primary-color);
-  color: white;
+  background: #f8f9fc;
+  color: var(--primary);
+  font-weight: 600;
   text-transform: uppercase;
-  font-size: 0.85rem;
-  letter-spacing: 0.5px;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  padding: 15px;
+  border-bottom: 2px solid var(--border);
+}
+
+td {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+tr:last-child td {
+  border-bottom: none;
 }
 
 tr:hover {
-  background-color: #f9f9f9;
+  background-color: #fcfdfe;
 }
 
-/* Alertas y Cards */
+/* Cards de Resultados (JS usa estas clases) */
 .card {
-  background: #f8f9fa;
-  padding: 20px;
-  border-left: 5px solid var(--accent-color);
-  border-radius: 8px;
+  background: #f8fbfd;
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid #e1effa;
   margin: 20px 0;
 }
 
 .aprobado {
-  background: #e8f5e9;
-  color: var(--success);
-  border: 1px solid #c8e6c9;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
+  border-left: 6px solid var(--success) !important;
+  background: #f0fff4 !important;
+  color: #1a531b;
 }
 
 .rechazado {
-  background: #ffebee;
-  color: var(--danger);
-  border: 1px solid #ffcdd2;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
+  border-left: 6px solid var(--danger) !important;
+  background: #fff5f5 !important;
+  color: #721c24;
 }
 
-/* Ajustes para Pantallas Grandes */
-@media (min-width: 600px) {
-  input, select {
-    width: auto;
-    min-width: 250px;
-  }
-}
-
-/* Ajustes para Móviles */
-@media (max-width: 500px) {
-  section {
-    padding: 15px;
-    margin: 10px;
+/* Responsividad Extra */
+@media (max-width: 768px) {
+  nav {
+    flex-wrap: wrap;
   }
   
   nav button {
-    flex: 1 1 40%;
-    font-size: 0.9rem;
-    padding: 10px;
+    flex: 1 1 50%;
+    padding: 12px;
+    font-size: 0.85rem;
+  }
+
+  section {
+    padding: 20px;
+    margin: 10px;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto; /* Scroll para tablas en móvil */
   }
 }
