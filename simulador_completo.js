@@ -351,7 +351,7 @@ function pintarCreditos(creditos){
           <td>${credito.tasa}</td>
           <td>${credito.plazo}</td>
           <td>${credito.cuota}</td>
-          <td><button>Eliminar</button></td>
+          <td><button onclick = "eliminarCredito(${credito.cedula})">Eliminar</button></td>
         </tr>`
   }
   tabla.innerHTML=contenidoTabla;
@@ -378,4 +378,12 @@ if(creditoRecuperado != null){
 
 
 }
-
+function eliminarCredito(cedula) {
+    for (let i = 0; i < creditos.length; i++) {
+        if (creditos[i].cedula == cedula) {
+            creditos.splice(i, 1);
+            break;
+        }
+    }
+    pintarCreditos(creditos);
+}
