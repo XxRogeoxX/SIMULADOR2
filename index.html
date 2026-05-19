@@ -16,6 +16,9 @@
   <button onclick="mostrarSeccion('clientes')">Clientes</button>
   <button onclick="mostrarSeccion('credito')">Credito</button>
   <button onclick="mostrarSeccion('listaCreditos')">Creditos Registrados</button>
+  <button onclick="mostrarSeccion('contactos')">Contactos</button>
+  <button onclick="mostrarSeccion('creditosVip')">Credistos VIP</button>
+  <button onclick="mostrarSeccion('acercaDe')">ACERCA DE</button>
 
 </nav>
  
@@ -28,8 +31,16 @@
  
   <br>
   <button onclick="guardarTasa()">Guardar tasa</button>
- 
   <p id="mensajeTasa"></p>
+
+  <label>Monto Maximo:</label>
+  <input type="number" id="montoMaximoPrestar" min="10" max="20000">
+  <span>$$</span>
+ 
+  <br>
+  <button onclick="guardarMontoMaximo()">Guardar Monto Maximo</button>
+  <p id="mensajeMonto"></p>
+  
 </section>
  
 <section id="clientes">
@@ -40,6 +51,9 @@
   <input type="text" id="apellido" placeholder="Apellido">
   <input type="number" id="ingresos" placeholder="Ingresos">
   <input type="number" id="egresos" placeholder="Egresos">
+  <input type="text" id="email" placeholder="Correo">
+  <input type="text" id="telefono" placeholder="Numero Celular">
+
  
   <br>
  
@@ -54,7 +68,9 @@
         <th>Apellido</th>
         <th>Ingresos</th>
         <th>Egresos</th>
-        <th>Acciones</th>
+        <th>Correo</th>
+        <th>Telefono</th>
+        <th>Accion</th>
       </tr>
     </thead>
     <tbody id="tablaClientes">
@@ -64,6 +80,9 @@
           <td>Pérez</td>
           <td>1200</td>
           <td>500</td>
+          <td>llala@gmail.com</td>
+          <td>09558500</td>
+
           <td>
             <button>Actualizar</button>
             <button>Eliminar</button>
@@ -75,6 +94,8 @@
           <td>Gómez</td>
           <td>1500</td>
           <td>600</td>
+          <td>akajkaja@gmail.com</td>
+          <td>0955454500</td>
           <td>
             <button>Actualizar</button>
             <button>Eliminar</button>
@@ -86,6 +107,8 @@
           <td>Ramírez</td>
           <td>900</td>
           <td>350</td>
+          <td>ajajjaala@gmail.com</td>
+          <td>096656500</td>
           <td>
             <button>Actualizar</button>
             <button>Eliminar</button>
@@ -168,7 +191,57 @@
     </tbody>
   </table>
 </section>
+<section id="contactos">
+    <h2>CONTACTOS</h2>
 
+    <input type="text" id="buscarContactos" placeholder="Escribe aquí...">
+    <button onclick="buscarContactos('nombre')">Buscar por Nombre</button>
+    <button onclick="buscarContactos('numero')">Buscar por Número</button>
+    <button onclick="ordenarContactos()">Ordenar por nombre</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Número</th>
+            </tr>
+        </thead>
+        <tbody id="tablaContactos">
+        </tbody>
+    </table>
+
+    <p>Desarrollado por: Ronald Sanchez</p>
+</section>
+
+<section id="creditosVip">
+  <h2>Créditos VIP (Mayores a $5,000)</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Cédula</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Monto Solicitado</th>
+        <th>Cuota Mensual</th>
+      </tr>
+    </thead>
+    <tbody id="tablaCreditosVip">
+      </tbody>
+  </table>
+</section>
+<section id="acercaDe">
+  <h2>Acerca del Desarrollador</h2>
+  
+  <div class="card seccion-acerca">
+    <h3 class="titulo-desarrollador">Ronald Sánchez Vásconez</h3>
+    
+    <p class="texto-acerca">
+      <strong>Información General:</strong><br>
+      Soy una persona de 29 años que actualmente se encuentra cursando su segunda carrera profesional por hobby.
+    </p>
+  </div>
+</section>
  
  
  

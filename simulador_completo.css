@@ -242,3 +242,33 @@ tr:hover {
     overflow-x: auto; /* Scroll para tablas en móvil */
   }
 }
+/* Estilos para la sección Acerca De con foto de fondo corregida */
+.seccion-acerca {
+  /* 1. CORRECCIÓN: Nombre exacto del archivo (.jpeg) */
+  /* 2. MEJORA: Añadimos un filtro oscuro sobre la foto para que el texto resalte */
+  background-image: linear-gradient(rgba(10, 37, 64, 0.75), rgba(10, 37, 64, 0.85)), url('FOTO_CON_ALESSIA.jpeg');
+  
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  color: white; 
+}
+
+.titulo-desarrollador {
+  color: #00d4ff; /* Usamos tu color cian moderno (--accent) para que resalte tu nombre */
+  margin-top: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.texto-acerca {
+  font-size: 1.1rem;
+  color: #ffffff;
+  line-height: 1.6;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}

@@ -1,38 +1,50 @@
 let clientes = [ 
-  {cedula:"0952934782", nombre:"Ronald", apellido:"Sanchez", ingresos:1000, egresos:800},
-  {cedula:"0952934582", nombre:"Ron", apellido:"Sancho", ingresos:100, egresos:80},
-  {cedula:"0952934482", nombre:"Rafaela", apellido:"Sanche", ingresos:1200, egresos:800}
+  {cedula:"0952934782", nombre:"Ronald", apellido:"Sanchez", ingresos:1000, egresos:800, email:"jjjQgmail", telefono:"0554655154"},
+  {cedula:"0952934582", nombre:"Ron", apellido:"Sancho", ingresos:100, egresos:80, email:"jjjQgmail", telefono:"0554655154"},
+  {cedula:"0952934482", nombre:"Rafaela", apellido:"Sanche", ingresos:1200, egresos:800, email:"jjjQgmail", telefono:"0554655154"}
 ];
   let creditos = [];
  
   let tasaInteres = 15;
+  let montoMaximo = 20000;
   let clienteSeleccionado = null;
   let cuotaCalculada = 0;
   let montoCalculado = 0;
   let plazoCalculado = 0;
   let creditoAprobado = false;
+
+  let listaContactos = [
+    { nombre: "Ana", numero: "0952934895" },
+    { nombre: "Jorge", numero: "0985941507" },
+    { nombre: "Rafa", numero: "0916551542" }];
  
  
 //Para recuperar o mostrar información usar los métodos de la clase utilitarios, puede agregar métodos adicionales en utilitarios
  
 function ocultarSecciones(){
-  let seccion1=document.getElementById("clientes");
-  let listaClases1=seccion1.classList //obtiene la lista de las clases del elemento
-  console.log (listaClases1);
-  listaClases1.remove("activa");
- 
-  let seccion2=document.getElementById("parametros");
-  let listaClases2=seccion2.classList //obtiene la lista de las clases del elemento
-  console.log (listaClases2);
-  listaClases2.remove("activa");
+  // arreglo con los IDs de TODAS secciones de forma limpia
+  let secciones = ["clientes", "parametros", "credito", "listaCreditos", "contactos", "creditosVip"];
+  
+  for(let i = 0; i < secciones.length; i++) {
+    let seccion = document.getElementById(secciones[i]);
+    if(seccion) {
+      seccion.classList.remove("activa");
+    }
+  }
 }
- 
+
 function mostrarSeccion(id){
-  ocultarSecciones()
+  ocultarSecciones();
   let seccion1=document.getElementById(id);
   let listaClases1=seccion1.classList //obtiene la lista de las clases del elemento
   listaClases1.add("activa")
   console.log(listaClases1)
+  if (id == "contactos") {
+    pintarContactos(listaContactos);
+}
+if (id == "creditosVip") {
+    actualizarCreditosVip();
+  }
 }
  
 function guardarTasa(){
@@ -45,6 +57,18 @@ function guardarTasa(){
  
   }
 }
+
+function guardarMontoMaximo() {
+  let cmpMontoMax = recuperarFloat("montoMaximoPrestar");
+  
+  if (cmpMontoMax >= 10 && cmpMontoMax <= 20000) {
+    mostrarTexto("mensajeMonto", "Monto máximo configurado correctamente: $ " + formatearDinero(cmpMontoMax));
+    montoMaximo = cmpMontoMax; // Guarda el valor en la variable global
+  } else {
+    mostrarTexto("mensajeMonto", "El monto máximo debe estar entre $10 y $20,000");
+    mostrarTextoEnCaja("montoMaximoPrestar", "");
+  }
+}
  
 function guardarCliente(){
   let cmpCedula=recuperarTexto("cedula");
@@ -52,17 +76,17 @@ function guardarCliente(){
   let cmpApellido=recuperarTexto("apellido");
   let cmpIngresos=recuperarFloat("ingresos");
   let cmpEgresos=recuperarFloat("egresos");
-  console.log(cmpCedula)
-  console.log(cmpNombre)
-  console.log(cmpApellido)
-  console.log(cmpIngresos)
-  console.log(cmpEgresos)
+  let cmpEmail=recuperarTexto("email");
+  let cmpTelefono=recuperarTexto("telefono");
+
   let cliente={
     cedula:cmpCedula,
     nombre:cmpNombre,
     apellido: cmpApellido,
     ingresos: cmpIngresos,
-    egresos: cmpEgresos
+    egresos: cmpEgresos,
+    email: cmpEmail,
+    telefono: cmpTelefono
   }
     console.log(cliente)
     clienteSeleccionado = buscarCliente(cmpCedula)
@@ -75,6 +99,9 @@ function guardarCliente(){
       clienteSeleccionado.apellido=cliente.apellido
       clienteSeleccionado.ingresos=cliente.ingresos
       clienteSeleccionado.egresos=cliente.egresos
+      clienteSeleccionado.email=cliente.email
+      clienteSeleccionado.telefono=cliente.telefono
+
     }else{
     clientes.push(cliente)// se guarda el objeto
     console.log(clientes)
@@ -94,6 +121,9 @@ function pintarCliente (){
     contenidoTabla+="<td>"+objCliente.apellido+"</td>"
     contenidoTabla+="<td>"+objCliente.ingresos+"</td>"
     contenidoTabla+="<td>"+objCliente.egresos+"</td>"
+    contenidoTabla+="<td>"+objCliente.email+"</td>"
+    contenidoTabla+="<td>"+objCliente.telefono+"</td>"
+
     contenidoTabla+="<td>"+
             "<button onclick=seleccionarCliente("+objCliente.cedula+")>Actualizar</button>"+
             "<button>Eliminar</button>"+
@@ -116,11 +146,15 @@ function buscarCliente(cedula){
 function seleccionarCliente(cedula){
   clienteSeleccionado=buscarCliente(cedula)
   if(clienteSeleccionado!=null){
-    mostrarTextoEnCaja("cedula",clienteSeleccionado.cedula)
-    mostrarTextoEnCaja("nombre",clienteSeleccionado.nombre)
-    mostrarTextoEnCaja("apellido",clienteSeleccionado.apellido)
-    mostrarTextoEnCaja("ingresos",clienteSeleccionado.ingresos)
-    mostrarTextoEnCaja("egresos",clienteSeleccionado.egresos)
+    mostrarTextoEnCaja("cedula",clienteSeleccionado.cedula);
+    mostrarTextoEnCaja("nombre",clienteSeleccionado.nombre);
+    mostrarTextoEnCaja("apellido",clienteSeleccionado.apellido);
+    mostrarTextoEnCaja("ingresos",clienteSeleccionado.ingresos);
+    mostrarTextoEnCaja("egresos",clienteSeleccionado.egresos);
+    mostrarTextoEnCaja("email",clienteSeleccionado.email);
+    mostrarTextoEnCaja("telefono",clienteSeleccionado.telefono);
+
+
   }
 }
  
@@ -130,6 +164,9 @@ function limpiar(){
     mostrarTextoEnCaja("apellido","")
     mostrarTextoEnCaja("ingresos","")
     mostrarTextoEnCaja("egresos","")
+    mostrarTextoEnCaja("email","")
+    mostrarTextoEnCaja("telefono","")
+
     clienteSeleccionado=null
 }
 
@@ -386,4 +423,81 @@ function eliminarCredito(cedula) {
         }
     }
     pintarCreditos(creditos);
+}
+
+function pintarContactos(listaContactos) {
+    let tabla = recuperarElemento("tablaContactos");
+    let contenedor = "";
+    for (let i = 0; i < listaContactos.length; i++) {
+        let contacto = listaContactos[i];
+        contenedor += `
+            <tr>
+                <td>${contacto.nombre}</td>
+                <td>${contacto.numero}</td>
+            </tr>
+        `;
+    }
+    tabla.innerHTML = contenedor;
+}
+
+function buscarContactos(filtro) {
+    let cmpFiltro = recuperarTexto("buscarContactos");
+    let filtroContactos = [];
+
+    if (filtro == "nombre") {
+        for (let i = 0; i < listaContactos.length; i++) {
+            let contacto = listaContactos[i];
+            if (contacto.nombre == cmpFiltro) {
+                filtroContactos.push(contacto);
+            }
+        }
+        pintarContactos(filtroContactos);
+    }
+
+    if (filtro == "numero") {
+        for (let i = 0; i < listaContactos.length; i++) {
+            let contacto = listaContactos[i];
+            if (contacto.numero == cmpFiltro) {
+                filtroContactos.push(contacto);
+            }
+        }
+        pintarContactos(filtroContactos);
+    }
+}
+
+function ordenarContactos() {
+    let contactosOrdenados = [];
+
+    // Crea una copia y ordena alfabéticamente por nombre
+    contactosOrdenados = listaContactos.slice().sort((a, b) => {
+        return a.nombre.localeCompare(b.nombre);
+    });
+
+    // Envía la lista ordenada a la función encargada de actualizar la tabla
+    pintarContactos(contactosOrdenados);
+}
+
+function actualizarCreditosVip() {
+  let tablaVip = recuperarElemento("tablaCreditosVip");
+  let contenidoTabla = "";
+
+  for (let i = 0; i < creditos.length; i++) {
+    let credito = creditos[i];
+
+    if (credito.monto >= 5000) {
+      
+      // Buscamos al cliente en el arreglo global para obtener sus Ingresos y Egresos
+      let infoCliente = buscarCliente(credito.cedula);
+      
+      contenidoTabla += `<tr>
+        <td>${credito.cedula}</td>
+        <td>${credito.nombre}</td>
+        <td>${credito.apellido}</td>
+        <td>$ ${formatearDinero(credito.monto)}</td>
+        <td>$ ${formatearDinero(credito.cuota)}</td>
+      </tr>`;
+    }
+  }
+
+  tablaVip.innerHTML = contenidoTabla;
 }
